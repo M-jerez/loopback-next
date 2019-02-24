@@ -13,35 +13,35 @@ describe('CalculatorService', () => {
   before(givenACalculatorService);
 
   it('adds two numbers', async () => {
-    const response = await calculatorService.Add(<CalculatorParameters>{
-      intA: 50,
-      intB: 2,
+    const response = await calculatorService.add(<CalculatorParameters>{
+      arg0: 50,
+      arg1: 2,
     });
-    expect(response.result.AddResult).to.deepEqual(52);
+    expect(response.result.return).to.deepEqual(52);
   });
 
   it('subtracts two numbers', async () => {
-    const response = await calculatorService.Subtract(<CalculatorParameters>{
-      intA: 40,
-      intB: 20,
+    const response = await calculatorService.subtract(<CalculatorParameters>{
+      arg0: 40,
+      arg1: 20,
     });
-    expect(response.result.SubtractResult).to.deepEqual(20);
+    expect(response.result.return).to.deepEqual(20);
   });
 
   it('multiplies two numbers', async () => {
-    const response = await calculatorService.Multiply(<CalculatorParameters>{
-      intA: 50,
-      intB: 2,
+    const response = await calculatorService.multiply(<CalculatorParameters>{
+      arg0: 50,
+      arg1: 2,
     });
-    expect(response.result.MultiplyResult).to.deepEqual(100);
+    expect(response.result.return).to.deepEqual(100);
   });
 
   it('divides two numbers', async () => {
-    const response = await calculatorService.Divide(<CalculatorParameters>{
-      intA: 100,
-      intB: 4,
+    const response = await calculatorService.divide(<CalculatorParameters>{
+      arg0: 100,
+      arg1: 4,
     });
-    expect(response.result.DivideResult).to.deepEqual(25);
+    expect(response.result.return).to.deepEqual(25);
   });
 
   async function givenACalculatorService() {

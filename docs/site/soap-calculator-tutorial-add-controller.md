@@ -70,10 +70,10 @@ and the interfaces we modeled in the previous step as follows:
 import {
   CalculatorService,
   CalculatorParameters,
-  AddResult,
-  MultiplyResult,
-  DivideResult,
-  SubtractResult,
+  AddResponse,
+  MultiplyResponse,
+  DivideResponse,
+  SubtractResponse,
 } from '../services/calculator.service';
 ```
 
@@ -106,14 +106,14 @@ service are available from here due to the dependency injection available
 through out **LB4**.
 
 ```ts
- async divide(intA: number,intB: number): Promise<DivideResult> {
+ async divide(arg0: number,arg1: number): Promise<DivideResponse> {
     //Preconditions
-    if (intB === 0) {
+    if (arg1 === 0) {
       throw new HttpErrors.PreconditionFailed('Cannot divide by zero');
     }
     return await this.calculatorService.Divide(<CalculatorParameters>{
-      intA,
-      intB,
+      arg0,
+      arg1,
     });
   }
 ```
@@ -122,8 +122,8 @@ Now, if we add the **@GET** decorator we are making it available to the **REST**
 _server_ as follows.
 
 ```ts
-  @get('/divide/{arg1}/{arg2}')
-   async divide(intA: number,intB: number): Promise<DivideResult> {
+  @get('/divide/{arg0}/{arg1}')
+   async divide(arg0: number,arg1: number): Promise<DivideResponse> {
 ```
 
 Finally we can use the **@param** decorator on the two properties to help us
@@ -134,18 +134,18 @@ service expects this data type and this is done automatically for us.
 The final code looks like as follows:
 
 ```ts
-@get('/divide/{arg1}/{arg2}')
+@get('/divide/{arg0}/{arg1}')
   async divide(
-    @param.path.integer('arg1') intA: number,
-    @param.path.integer('arg2') intB: number,
-  ): Promise<DivideResult> {
+    @param.path.integer('arg1') arg0: number,
+    @param.path.integer('arg2') arg1: number,
+  ): Promise<DivideResponse> {
     //Preconditions
-    if (intB === 0) {
+    if (arg1 === 0) {
       throw new HttpErrors.PreconditionFailed('Cannot divide by zero');
     }
     return await this.calculatorService.Divide(<CalculatorParameters>{
-      intA,
-      intB,
+      arg0,
+      arg1,
     });
   }
 ```
@@ -156,35 +156,35 @@ Add the following end point methods inside the CalculatorController class above
 the divide end point method.
 
 ```ts
- @get('/multiply/{arg1}/{arg2}')
+ @get('/multiply/{arg0}/{arg1}')
   async multiply(
-    @param.path.integer('arg1') intA: number,
-    @param.path.integer('arg2') intB: number,
-  ): Promise<MultiplyResult> {
+    @param.path.integer('arg1') arg0: number,
+    @param.path.integer('arg2') arg1: number,
+  ): Promise<MultiplyResponse> {
     return await this.calculatorService.Multiply(<CalculatorParameters>{
-      intA,
-      intB,
+      arg0,
+      arg1,
     });
   }
-  @get('/add/{arg1}/{arg2}')
+  @get('/add/{arg0}/{arg1}')
   async add(
-    @param.path.integer('arg1') intA: number,
-    @param.path.integer('arg2') intB: number,
-  ): Promise<AddResult> {
+    @param.path.integer('arg1') arg0: number,
+    @param.path.integer('arg2') arg1: number,
+  ): Promise<AddResponse> {
     return await this.calculatorService.Add(<CalculatorParameters>{
-      intA,
-      intB,
+      arg0,
+      arg1,
     });
   }
 
-  @get('/subtract/{arg1}/{arg2}')
+  @get('/subtract/{arg0}/{arg1}')
   async subtract(
-    @param.path.integer('arg1') intA: number,
-    @param.path.integer('arg2') intB: number,
-  ): Promise<SubtractResult> {
+    @param.path.integer('arg1') arg0: number,
+    @param.path.integer('arg2') arg1: number,
+  ): Promise<SubtractResponse> {
     return await this.calculatorService.Subtract(<CalculatorParameters>{
-      intA,
-      intB,
+      arg0,
+      arg1,
     });
   }
 ```
